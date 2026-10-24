@@ -4,6 +4,10 @@ An offline-first PWA that answers questions about a dataset in English, Hindi or
 
 It is a proof of work for the kind of frontend described in Sarvam's "Frontend Engineer, Chanakya" posting: dashboards for enterprise users in constrained environments ("offline-first, low-bandwidth, limited hardware"), with a natural-language access layer and a geospatial view. It is not affiliated with Sarvam and the data is synthetic.
 
+## Live
+
+https://poochho-imamk8114.netlify.app
+
 ## Try it
 
 ```bash
@@ -12,6 +16,7 @@ npm run dev        # http://localhost:5188
 npm test           # 60 unit tests
 npm run build && npm run preview
 npm run e2e        # real-Chrome test of the offline behaviour (needs `preview` running)
+BASE_URL=https://poochho-imamk8114.netlify.app/ npm run e2e   # the same test against the live site
 ```
 
 Click any example. To use Sarvam, open Settings and paste an API key; it stays in the tab's session storage and is sent only to `api.sarvam.ai`.
@@ -39,13 +44,13 @@ question ──► saved plan on this device? ──yes──► run it
 
 ## Measured
 
-From `npm run e2e`, in headless Chrome against the production build. Chrome's "slow 4G" preset is 150 ms round trip, 1.6 Mbit/s down.
+From `npm run e2e` in headless Chrome. Chrome's "slow 4G" preset is 150 ms round trip, 1.6 Mbit/s down. The first two rows are against the deployed site on Netlify (two runs); the local production build was faster, at about 0.75 s and 0.9 s.
 
 | What | Result |
 |---|---|
 | Initial download (JS + CSS, gzip) | 73 kB |
-| First load on throttled slow 4G: question box usable | about 0.75 s |
-| First load on throttled slow 4G: first chart drawn | about 0.9 s |
+| First load on throttled slow 4G: question box usable | 1.2 to 1.5 s |
+| First load on throttled slow 4G: first chart drawn | 1.4 to 1.7 s |
 | Reload with the network cut | app loads, question answered |
 | One query over 24,000 rows | under 1 ms |
 

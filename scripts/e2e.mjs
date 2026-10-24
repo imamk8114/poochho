@@ -30,7 +30,8 @@ await context.route('https://api.sarvam.ai/**', route => {
   return route.fulfill({ status: 200, headers: { ...cors, 'content-type': 'application/json' }, body: JSON.stringify({ choices: [{ message: { content: JSON.stringify(plan) } }] }) });
 });
 const page = await context.newPage();
-page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
+// Netlify injects its own script (/.netlify/...) into pages it hosts; it cannot load offline and is not part of the app.
+page.on('console', m => { if (m.type() === 'error' && !m.location().url.includes('/.netlify/')) errors.push(m.text()); });
 page.on('pageerror', e => errors.push(String(e)));
 
 await page.goto(BASE, { waitUntil: 'domcontentloaded' });
